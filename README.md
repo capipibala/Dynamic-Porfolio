@@ -1,73 +1,166 @@
-# React + TypeScript + Vite
+# My Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio built with **React**, **TypeScript**, and **Vite**, structured around a small custom **component system** and a **data-driven** content model.
 
-Currently, two official plugins are available:
+This project is no longer the default Vite starter. It has been refactored into a reusable frontend foundation for a personal portfolio site, with attention to consistency, maintainability, responsiveness, accessibility, testing, and UI documentation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Custom shared UI components
+- Data-driven portfolio content
+- Clear source structure for scalability
+- Responsive layout
+- Baseline dark-mode-ready styling
+- Component testing with **Vitest** and **Testing Library**
+- Stories/playground with **Ladle**
+- Linting and formatting with **ESLint**, **Prettier**, and **Husky**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Vitest
+- Testing Library
+- Ladle
+- ESLint
+- Prettier
+- Husky
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Available Scripts
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+pnpm test
+pnpm test:watch
+pnpm lint
+pnpm lint:fix
+pnpm dev:ladle
+pnpm build:ladle
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  components/
+    shared/
+      button/
+      textbox/
+    ui/
+      Card.tsx
+      Container.tsx
+      Section.tsx
+      Stack.tsx
+      Tag.tsx
+  data/
+    portfolio.ts
+  layouts/
+    AppShell.tsx
+  pages/
+    PortfolioPage.tsx
+  types/
+    portfolio.ts
+  utils/
+    cn.ts
+  App.tsx
+  App.css
+  index.css
+  main.tsx
+  setupTests.ts
 ```
+
+## Architecture Overview
+
+### Component System
+
+The UI is built from small reusable primitives and shared components, including:
+
+- `Button`
+- `TextBox`
+- `Container`
+- `Section`
+- `Card`
+- `Tag`
+- `Stack`
+
+These components provide a lightweight system for composing larger page sections while keeping the UI consistent.
+
+### Data-Driven Content
+
+Portfolio content is centralized in:
+
+- `src/data/portfolio.ts`
+
+This makes it easier to:
+
+- update content without changing layout logic
+- render sections from structured data
+- extend the site later with CMS, JSON, or external content sources
+
+### Quality Workflow
+
+The project keeps a simple but reliable frontend workflow:
+
+- **Vitest + Testing Library** for component tests
+- **Ladle** for isolated component stories
+- **ESLint + Prettier** for code quality and formatting
+- **Husky** for git hook automation
+
+## Current Portfolio Sections
+
+The current portfolio page includes:
+
+- Hero
+- About
+- Skills
+- Experience
+- Projects
+- Contact
+- Footer
+
+## Development
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Start the development server:
+
+```bash
+pnpm dev
+```
+
+Run tests:
+
+```bash
+pnpm test
+```
+
+Start Ladle:
+
+```bash
+pnpm dev:ladle
+```
+
+## Future Improvements
+
+Possible next steps for the project:
+
+- add `hooks/` for theme switching or active section tracking
+- split page sections into dedicated section components
+- add more shared UI primitives such as `IconButton`, `Heading`, or `Text`
+- improve page-level test coverage
+- implement a real dark mode toggle
+- add subtle motion with `prefers-reduced-motion` support
+
+## Status
+
+- `pnpm test` passing
+- `pnpm build` passing

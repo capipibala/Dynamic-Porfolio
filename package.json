@@ -3,15 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev:ladle": "ladle serve",
-    "build:ladle": "ladle build",
-    "test": "npx lint-staged",
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "start": "vite",
     "preview": "vite preview",
-    "prepare": "husky",
-    "testcase": "npx vitest"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "dev:ladle": "ladle serve",
+    "build:ladle": "ladle build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ladle/react": "^5.0.3",
@@ -20,16 +22,17 @@
     "react-dom": "^19.1.1"
   },
   "lint-staged": {
-    "src/**/*.(ts|tsx|js|jsx)": [
+    "src/**/*.{ts,tsx,js,jsx}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "src/**/*.(json|css|scss|md)": [
+    "src/**/*.{json,css,scss,md}": [
       "prettier --write"
     ]
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.9.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -56,3 +59,4 @@
     "vitest": "^3.2.4"
   }
 }
+
