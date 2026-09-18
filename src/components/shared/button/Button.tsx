@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../../utils/cn';
 
 type CommonProps = {
@@ -15,11 +15,13 @@ type CommonProps = {
 type NativeButtonProps = CommonProps &
     ButtonHTMLAttributes<HTMLButtonElement> & {
         href?: undefined;
+        ref?: Ref<HTMLButtonElement>;
     };
 
 type LinkButtonProps = CommonProps &
     AnchorHTMLAttributes<HTMLAnchorElement> & {
         href: string;
+        ref?: Ref<HTMLAnchorElement>;
     };
 
 export type ButtonProps = NativeButtonProps | LinkButtonProps;
@@ -29,7 +31,8 @@ const baseClasses =
 
 const variantClassMap = {
     primary: 'bg-sky-500 text-white hover:bg-sky-600',
-    secondary: 'border border-slate-300 bg-white text-slate-900 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800',
+    secondary:
+        'border border-slate-300 bg-white text-slate-900 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800',
     ghost: 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800',
 } as const;
 

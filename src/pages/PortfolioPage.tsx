@@ -1,3 +1,6 @@
+import { useLocale } from '../i18n/locale-context';
+import { portfolioVi } from '../data/portfolio.vi';
+import { ProjectExplorer } from '../components/ProjectExplorer';
 import { portfolioData } from '../data/portfolio';
 import { AppShell } from '../layouts/AppShell';
 import { Button } from '../components/shared/button/Button';
@@ -8,7 +11,9 @@ import { Stack } from '../components/ui/Stack';
 import { Tag } from '../components/ui/Tag';
 
 export function PortfolioPage() {
-    const { person, navigation, socialLinks, stats, about, skillGroups, experiences, projects, contact, siteName } = portfolioData;
+    const { locale, t } = useLocale();
+    const { person, navigation, socialLinks, stats, about, skillGroups, experiences, projects, contact, siteName } =
+        locale === 'vi' ? portfolioVi : portfolioData;
 
     return (
         <AppShell siteName={siteName} navigation={navigation} socialLinks={socialLinks}>
@@ -16,17 +21,21 @@ export function PortfolioPage() {
                 <Container className="grid gap-10 py-20 sm:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
                     <Stack gap="lg">
                         <div>
-                            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">Portfolio · Component System</p>
+                            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">
+                                {t.hero}
+                            </p>
                             <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
                                 {person.name}
                             </h1>
                             <p className="mt-4 text-xl text-slate-700 dark:text-slate-200">{person.role}</p>
-                            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-300">{person.summary}</p>
+                            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-300">
+                                {person.summary}
+                            </p>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
-                            <Button label="View projects" href="#projects" />
-                            <Button label="Contact me" href="#contact" variant="secondary" />
+                            <Button label={t.viewProjects} href="#projects" />
+                            <Button label={t.contactMe} href="#contact" variant="secondary" />
                         </div>
 
                         <div className="flex flex-wrap gap-6 text-sm text-slate-600 dark:text-slate-300">
@@ -46,7 +55,7 @@ export function PortfolioPage() {
                 </Container>
             </section>
 
-            <Section id="about" eyebrow="About" title="Building thoughtful interfaces with reusable components">
+            <Section id="about" eyebrow={t.about} title={t.aboutTitle}>
                 <div className="grid gap-6 lg:grid-cols-2">
                     {about.map((paragraph) => (
                         <Card key={paragraph}>
@@ -56,12 +65,7 @@ export function PortfolioPage() {
                 </div>
             </Section>
 
-            <Section
-                id="skills"
-                eyebrow="Skills"
-                title="A practical frontend toolkit"
-                description="Tập trung vào hệ thống component, chất lượng code và trải nghiệm người dùng nhất quán trên nhiều kích thước màn hình."
-            >
+            <Section id="skills" eyebrow={t.skills} title={t.skillsTitle} description={t.skillsDescription}>
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                     {skillGroups.map((group) => (
                         <Card key={group.title} className="h-full">
@@ -78,21 +82,25 @@ export function PortfolioPage() {
 
             <Section
                 id="experience"
-                eyebrow="Experience"
-                title="Recent work"
-                description="Một vài chặng đường gần đây tập trung vào UI engineering, component reuse và product delivery."
+                eyebrow={t.experience}
+                title={t.experienceTitle}
+                description={t.experienceDescription}
             >
                 <div className="grid gap-6">
                     {experiences.map((experience) => (
                         <Card key={`${experience.company}-${experience.role}`}>
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                 <div>
-                                    <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{experience.role}</h3>
+                                    <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
+                                        {experience.role}
+                                    </h3>
                                     <p className="mt-1 text-sm font-medium text-sky-500">{experience.company}</p>
                                 </div>
                                 <p className="text-sm text-slate-500 dark:text-slate-400">{experience.period}</p>
                             </div>
-                            <p className="mt-4 leading-8 text-slate-600 dark:text-slate-300">{experience.description}</p>
+                            <p className="mt-4 leading-8 text-slate-600 dark:text-slate-300">
+                                {experience.description}
+                            </p>
                             <ul className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
                                 {experience.highlights.map((highlight) => (
                                     <li key={highlight} className="flex gap-3">
@@ -106,49 +114,19 @@ export function PortfolioPage() {
                 </div>
             </Section>
 
-            <Section
-                id="projects"
-                eyebrow="Projects"
-                title="Selected work"
-                description="Danh sách project được render hoàn toàn từ data, giúp dễ mở rộng, quản trị nội dung và tái sử dụng card layouts."
-            >
-                <div className="grid gap-6 lg:grid-cols-2">
-                    {projects.map((project) => (
-                        <Card key={project.title} className="flex h-full flex-col">
-                            <div className="flex items-start justify-between gap-4">
-                                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{project.title}</h3>
-                                {project.featured ? <Tag className="border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900 dark:bg-sky-950 dark:text-sky-300">Featured</Tag> : null}
-                            </div>
-                            <p className="mt-4 flex-1 leading-8 text-slate-600 dark:text-slate-300">{project.description}</p>
-                            <div className="mt-5 flex flex-wrap gap-2">
-                                {project.tags.map((tag) => (
-                                    <Tag key={tag}>{tag}</Tag>
-                                ))}
-                            </div>
-                            <div className="mt-6 flex flex-wrap gap-3">
-                                {project.href ? <Button label="Live preview" href={project.href} size="sm" /> : null}
-                                {project.repositoryHref ? <Button label="Repository" href={project.repositoryHref} variant="secondary" size="sm" /> : null}
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+            <Section id="projects" eyebrow={t.projects} title={t.projectsTitle} description={t.projectsDescription}>
+                <ProjectExplorer projects={projects} />
             </Section>
 
-            <Section
-                id="contact"
-                eyebrow="Contact"
-                title="Let’s build something useful"
-                description={contact.intro}
-            >
+            <Section id="contact" eyebrow={t.contact} title={t.contactTitle} description={contact.intro}>
                 <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
                     <Card>
                         <Stack>
-                            <p className="leading-8 text-slate-600 dark:text-slate-300">
-                                Mình quan tâm tới các dự án frontend, website sản phẩm, internal tools và design system work. Nếu bạn có idea hoặc cơ hội phù hợp, hãy kết nối.
-                            </p>
+                            <p className="leading-8 text-slate-600 dark:text-slate-300">{t.contactBody}</p>
                             <div className="flex flex-wrap gap-4">
-                                <Button label="Send email" href="mailto:hello@example.com" />
-                                <Button label="Go to GitHub" href="https://github.com/" variant="secondary" />
+                                {contact.items.map((item) => (
+                                    <Button key={item.label} label={item.label} href={item.href} variant="secondary" />
+                                ))}
                             </div>
                         </Stack>
                     </Card>
@@ -157,7 +135,9 @@ export function PortfolioPage() {
                         <ul className="space-y-4">
                             {contact.items.map((item) => (
                                 <li key={item.label}>
-                                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{item.label}</p>
+                                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                                        {item.label}
+                                    </p>
                                     <a
                                         href={item.href}
                                         target={item.href.startsWith('http') ? '_blank' : undefined}

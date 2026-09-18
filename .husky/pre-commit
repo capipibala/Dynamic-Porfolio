@@ -1,1 +1,22 @@
+# GUI Git clients do not load the shell configuration that initializes nvm.
+portfolio_nvm_dir="${NVM_DIR:-$HOME/.nvm}"
+if [ -s "$portfolio_nvm_dir/nvm.sh" ]; then
+    . "$portfolio_nvm_dir/nvm.sh" --no-use
+    if ! nvm use --silent; then
+        echo "pre-commit: Install the Node version in .nvmrc with 'nvm install', then retry the commit." >&2
+        exit 1
+    fi
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+    echo "pre-commit: Node.js is missing. Install the version in .nvmrc and retry." >&2
+    exit 1
+fi
+
+# Allow other Node managers when they already expose a Vite-compatible runtime.
+if ! node -e 'const [major, minor] = process.versions.node.split(".").map(Number); process.exit((major === 20 && minor >= 19) || (major === 22 && minor >= 12) || major > 22 ? 0 : 1)'; then
+    echo "pre-commit: Unsupported Node $(node --version). Use the version in .nvmrc (nvm install && nvm use)." >&2
+    exit 1
+fi
+
 npm test

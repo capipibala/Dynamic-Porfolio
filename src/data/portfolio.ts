@@ -74,31 +74,26 @@ export const portfolioData: PortfolioData = {
         {
             title: 'Portfolio System',
             description:
-                'Một portfolio cá nhân được xây theo hướng component system riêng, ưu tiên tái sử dụng, accessibility và mở rộng lâu dài.',
+                'A personal portfolio built with a custom component system, focused on reuse, accessibility, and long-term growth.',
             tags: ['React', 'TypeScript', 'Tailwind', 'Vitest'],
-            href: '#',
-            repositoryHref: '#',
             featured: true,
         },
         {
             title: 'UI Component Library Sandbox',
             description:
-                'Không gian thử nghiệm cho các shared UI components với stories trên Ladle và test với Testing Library.',
+                'A playground for shared UI components, with Ladle stories and tests using Testing Library.',
             tags: ['Ladle', 'Testing Library', 'Design System'],
-            href: '#',
-            repositoryHref: '#',
             featured: true,
         },
         {
             title: 'Responsive Landing Pages',
             description:
-                'Bộ landing page tối ưu cho chuyển đổi, chú trọng visual hierarchy và hiệu năng tải trang.',
+                'Landing pages optimized for conversion, with a focus on visual hierarchy and loading performance.',
             tags: ['Responsive', 'SEO', 'Performance'],
-            href: '#',
         },
     ],
     contact: {
-        intro: 'Nếu bạn đang tìm một frontend engineer có tư duy hệ thống, mình rất sẵn sàng trao đổi thêm.',
+        intro: 'If you are looking for a frontend engineer with a systems mindset, I would be happy to talk.',
         items: [
             { label: 'Email', value: 'hello@example.com', href: 'mailto:hello@example.com' },
             { label: 'GitHub', value: 'github.com/your-profile', href: 'https://github.com/' },

@@ -10,7 +10,9 @@ This project is no longer the default Vite starter. It has been refactored into 
 - Data-driven portfolio content
 - Clear source structure for scalability
 - Responsive layout
-- Baseline dark-mode-ready styling
+- Light, dark, and system themes with a saved browser preference
+- Project search and technology filtering with reset and empty states
+- Mobile navigation with keyboard support
 - Component testing with **Vitest** and **Testing Library**
 - Stories/playground with **Ladle**
 - Linting and formatting with **ESLint**, **Prettier**, and **Husky**
@@ -125,9 +127,12 @@ The current portfolio page includes:
 
 ## Development
 
+Use Node 22 (the version is pinned in `.nvmrc`).
+
 Install dependencies:
 
 ```bash
+nvm use
 pnpm install
 ```
 
@@ -153,14 +158,45 @@ pnpm dev:ladle
 
 Possible next steps for the project:
 
-- add `hooks/` for theme switching or active section tracking
+- add active section tracking
 - split page sections into dedicated section components
 - add more shared UI primitives such as `IconButton`, `Heading`, or `Text`
-- improve page-level test coverage
-- implement a real dark mode toggle
-- add subtle motion with `prefers-reduced-motion` support
+- expand browser-level accessibility and responsive checks
+- replace sample contact details and experience with verified personal content
 
 ## Status
 
 - `pnpm test` passing
 - `pnpm build` passing
+
+## Content setup
+
+Edit `src/data/portfolio.ts` to update the profile, experience, projects, and contact links.
+Project `href` and `repositoryHref` are optional: buttons appear only when a URL is provided.
+Contact actions use `contact.items`; footer links use `socialLinks`, so update both lists.
+The document title and description live in `index.html`.
+
+## Verification
+
+Run `pnpm test`, `pnpm lint`, and `pnpm build` with Node 22.
+Tests cover project filtering/reset, theme persistence and blocked storage, mobile menu behavior,
+and unique accessible text fields. Browser layout testing remains a separate check.
+
+The pre-commit hook loads nvm from `NVM_DIR` (or `~/.nvm`) and selects `.nvmrc`
+before running tests, including commits from an IDE. Run `nvm install` once if
+that version is missing. With another Node manager, ensure the IDE's Git process
+has a compatible Node on its PATH; the hook reports incompatible versions before testing.
+
+## Languages
+
+The header language selector switches the entire portfolio between English and Vietnamese.
+The initial language follows the browser (`vi` uses Vietnamese; other languages use English),
+with an explicit choice saved under `portfolio-language` in local storage. Switching also updates
+the document language, title, and description. Theme and project filters remain selected.
+
+- `src/data/portfolio.ts`: English content and shared names, links, and technology tags.
+- `src/data/portfolio.vi.ts`: Vietnamese content. When adding or renaming a project, update its
+  entry in `projectDescriptions`; an untranslated project falls back to its English description.
+- `src/i18n/messages.ts`: UI labels and metadata for both languages, checked for matching keys by TypeScript.
+
+This is client-side language switching on one URL, not separate indexed locale routes.

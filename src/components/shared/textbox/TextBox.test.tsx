@@ -23,3 +23,19 @@ describe('TextBox component', () => {
         expect(screen.getByText('We only use this to reply.')).toBeInTheDocument();
     });
 });
+
+it('gives each field a unique label and combines external descriptions with errors', () => {
+    render(
+        <>
+            <TextBox label="First name" hint="Given name" />
+            <TextBox label="Last name" error="Required" aria-describedby="policy" />
+            <p id="policy">Privacy policy</p>
+        </>,
+    );
+    const first = screen.getByLabelText('First name');
+    const last = screen.getByLabelText('Last name');
+    expect(first.id).not.toBe(last.id);
+    expect(first).toHaveAccessibleDescription('Given name');
+    expect(last).toHaveAccessibleDescription('Privacy policy Required');
+    expect(last).toHaveAttribute('aria-invalid', 'true');
+});
